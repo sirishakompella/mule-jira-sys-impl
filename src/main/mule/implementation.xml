@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="issues" doc:id="2342285c-ac1b-4495-a018-4565214a4ac6" >
+		<ee:transform doc:name="Transform Message" doc:id="95c507b4-41ef-4add-94f3-aaf82750f5ed" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"issueUpdates": 
+ payload map (val, idx) -> {
+     "fields":{
+ "project" : {"key":(val.project)},
+ "issuetype" : {"name": (val.issueType)},
+ "assignee": {"name": (val.assignee)},
+ "summary": val.summary,
+ "description": val.description,
+ "environment": val.environment
+}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="8e3b0a9a-3cbd-4b81-b515-061410c8626b" path="/rest/api/2/issue/bulk" config-ref="HTTP_Request_configuration"/>
+		<ee:transform doc:name="Transform Message" doc:id="2cc4a7a6-53bd-4dd6-9ebf-561356d1b2ad">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="0d709f5b-9070-466c-8f34-18d5d336f8fd" message="#[payload]"/>
+	</flow>
+</mule>

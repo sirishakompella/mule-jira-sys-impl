@@ -1,0 +1,13 @@
+%dw 2.0
+
+type auto_2342285c_ac1b_4495_a018_4565214a4ac6_Output_Payload = {
+  message: String, 
+  body?: {
+    self: String, 
+    id: String, 
+    key: String, 
+    _?: Any
+  } {"description": "For Success response, the data should be part of this object"}, 
+  _?: Any
+}
+

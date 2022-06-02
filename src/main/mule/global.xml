@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d1a32fb5-f822-4de2-bc64-58c1e0c8bbaf" >
+		<http:request-connection host="localhost" port="8087" >
+			<http:authentication >
+				<http:basic-authentication username="skompella" password="password" />
+			</http:authentication>
+		</http:request-connection>
+	</http:request-config>
+	<import doc:name="Import" doc:id="bdaca308-3c12-4df7-8ae4-32fd45624dcc" file="global-error-handler.xml" />
+	<configuration doc:name="Configuration" doc:id="350b885e-d978-409d-a7f1-d8647bec6cea" defaultErrorHandler-ref="global-error-handlerError_Handler" />
+</mule>
